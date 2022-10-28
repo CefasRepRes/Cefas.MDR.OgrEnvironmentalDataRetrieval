@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "7t2s1n23j9l606naszd748rv0piuro3h",
+    "Name": "Cefas AT"
+  },
+  "ProjectKey": "MDRServicesInternal",
+  "ProjectName": "MDR Services Internal",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWM_P3T7Kkf5OKnWiTER",
+      "ProfileTimestamp": "2022-03-31T10:15:41Z"
+    }
+  }
+}

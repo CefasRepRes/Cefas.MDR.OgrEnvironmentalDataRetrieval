@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <CodeAnalysisRuleSet>..\.sonarlint\mdrservicesinternalcsharp.ruleset</CodeAnalysisRuleSet>
+    <Configurations>Data Hub Debug;Internal Release;Internal Debug;Data Hub Release</Configurations>
+  </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Release|AnyCPU'">
+    <DefineConstants>TRACE;INTERNAL</DefineConstants>
+  </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Data Hub Release|AnyCPU'">
+      <DefineConstants>TRACE;INTERNAL</DefineConstants>
+    </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;INTERNAL</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Data Hub Debug|AnyCPU'">
+    <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Data Hub Release|AnyCPU'">
+    <NoWarn>1701;1702;1705;1591</NoWarn>
+    <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\mdrservicesinternal\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="2.1.1" />
+    <PackageReference Include="NPoco" Version="5.3.2" />
+    <PackageReference Include="SqlKata" Version="2.3.7" />
+    <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MDRCloudServices.DataLayer\MDRCloudServices.DataLayer.csproj" />
+    <ProjectReference Include="..\MDRCloudServices.Exceptions\MDRCloudServices.Exceptions.csproj" />
+    <ProjectReference Include="..\MDRCloudServices.Services\MDRCloudServices.Services.csproj" />
+  </ItemGroup>
+
+</Project>

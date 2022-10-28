@@ -1,0 +1,75 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,700;1,400&display=swap');
+
+body, .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 18px;
+    background-color: #fff;
+}
+
+.topbar {
+    background-color: #0d2346 !important;
+}
+
+.topbar-wrapper a {
+    max-width: 800px !important;
+}
+
+    .topbar-wrapper a::before {
+        content: "";
+        display: block;
+        height: 60px;
+        width: 220px;
+        min-width: 220px;
+        max-width: 220px;
+        background-image: url('Cefas-new-white.gif');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+.topbar-wrapper img {
+    height: 60px;
+}
+
+h2.title {
+    text-align: left;
+    color: #096d89 !important;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    font-size: 3.75rem !important;
+    font-weight: bold;
+    line-height: 1.33;
+    letter-spacing: 6px;
+}
+
+
+element.style {
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.swagger-ui a.nostyle, .swagger-ui a.nostyle:visited {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: inherit;
+}
+
+.swagger-ui .opblock .opblock-summary-operation-id, .swagger-ui .opblock .opblock-summary-path,
+.swagger-ui .opblock .opblock-summary-path__deprecated, .opblock-summary-description, .info__contact a, a.link, p, th,
+.response-col_status, .response-col_description, .response-col_links {
+    font-size: 18px !important;
+}
+
+div.description p {
+    font-size: 24px !important;
+}
+
+h3 {
+    font-size: 30px !important;
+}
+
+h3 small, h4 {
+    font-size: 20px !important;
+}

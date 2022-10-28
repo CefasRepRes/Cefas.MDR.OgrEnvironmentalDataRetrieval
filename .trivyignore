@@ -1,0 +1,10 @@
+#Possible issue with regex when accessing remote servers. We only access GeoServer which we control so this is not an issue
+CVE-2021-27293
+
+# Only affects Newtonsoft.Json prior to version 13.0.1, we are already on 13.0.1
+GHSA-5crp-9r3c-p9vr
+
+#Does not apply to .NET 6
+CVE-2018-8292
+CVE-2017-11770
+CVE-2019-0820

@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <CodeAnalysisRuleSet>..\.sonarlint\mdrservicesinternalcsharp.ruleset</CodeAnalysisRuleSet>
+    <Configurations>Data Hub Debug;Data Hub Release;Internal Debug;Internal Release</Configurations>
+  </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Debug|AnyCPU'">
+        <DefineConstants>DEBUG;TRACE;INTERNAL</DefineConstants>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Release|AnyCPU'">
+        <DefineConstants>TRACE;INTERNAL</DefineConstants>
+        <Optimize>True</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Data Hub Debug|AnyCPU'">
+        <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Debug|AnyCPU'">
+      <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+      <NoWarn>1701;1702;1705;1591</NoWarn>
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+      <Optimize>false</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Data Hub Release|AnyCPU'">
+        <NoWarn>1701;1702;1705;1591</NoWarn>
+        <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+        <Optimize>True</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal Release|AnyCPU'">
+      <NoWarn>1701;1702;1705;1591</NoWarn>
+      <DocumentationFile>bin\MDRCloudServices.Api.xml</DocumentationFile>
+      <Optimize>True</Optimize>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\mdrservicesinternal\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+</Project>
