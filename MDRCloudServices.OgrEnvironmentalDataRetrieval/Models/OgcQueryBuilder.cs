@@ -6,12 +6,12 @@ using SqlKata;
 
 namespace MDRCloudServices.OgrEnvironmentalDataRetrieval.Models;
 
-/// <summary>Query Builder for OGC Environment Data Retreival Queries</summary>
+/// <summary>Query Builder for OGC Environmental Data Retrieval Queries</summary>
 public static class OgcQueryBuilder
 {
     /// <summary>Build date query</summary>
     /// <param name="builder">Existing query to expand</param>
-    /// <param name="datetime">The date paramter</param>
+    /// <param name="datetime">The date parameter</param>
     /// <param name="fieldname">The name of the field containing dates</param>
     public static void BuildDateQuery(Query builder, string? datetime, string? fieldname)
     {
@@ -193,10 +193,10 @@ public static class OgcQueryBuilder
             var geom = new WKTReader().Read(wkt);
             // Geometry buffer uses degrees. Geography buffer allows units
             builder.WhereRaw(
-                "MDR_Geometry.STIntersects(geometry::STGeomFromWKB((geography::STGeomFromWKB(?, ?).STBuffer(?)).STAsBinary(), 4326)) = 1",                
+                "MDR_Geometry.STIntersects(geometry::STGeomFromWKB((geography::STGeomFromWKB(?, ?).STBuffer(?)).STAsBinary(), 4326)) = 1",
                 geom.AsBinary(),
                 geom.SRID == -1 ? 4326 : geom.SRID,
-                distance);         
+                distance);
         }
         catch (ParseException ex)
         {

@@ -119,11 +119,11 @@ try
 
         c.SwaggerDoc("ogc", new OpenApiInfo
         {
-            Title = "OGC Environment Data Retrieval API",
+            Title = "OGC Environmental Data Retrieval API",
             Description = "<p>An Environmental Data Retrieval (EDR) API provides a family of lightweight interfaces " +
                 "to access Environmental Data resources, as per the standard defined by the Open Geospatial " +
                 "Consortium. Only a limited number of Cefas recordsets are available via this API.</p>" +
-                "<p><a href=\"https://www.ogc.org/standards/ogcapi-edr\">OGC Environment Data Retrieval Standard</a> &nbsp; &nbsp; " +
+                "<p><a href=\"https://www.ogc.org/standards/ogcapi-edr\">OGC Environmental Data Retrieval Standard</a> &nbsp; &nbsp; " +
                 "<a href=\"https://www.cefas.co.uk/data-and-publications/cefas-data-hub-terms-and-conditions/\">" +
                 "Terms and Conditions</a> &nbsp; &nbsp; " +
                 "<a href=\"https://www.cefas.co.uk/about-us/policies-plans-reports-and-quality/policies/cookies-policy/\">" +
@@ -161,7 +161,6 @@ try
             x.Endpoint = builder.Configuration["Seq:ServerUrl"];
             x.ApiKey = builder.Configuration["Seq:ApiKey"];
         });
-
 
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IDatabase, Database>(s => GetDatabase(builder.Configuration));
@@ -221,4 +220,3 @@ finally
 {
     Log.CloseAndFlush();
 }
-
