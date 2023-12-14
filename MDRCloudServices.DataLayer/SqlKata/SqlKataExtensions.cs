@@ -1,6 +1,6 @@
 ﻿/*
- Ported to NPoco from PetaPoco by David Lees 
- 
+ Ported to NPoco from PetaPoco by David Lees
+
  Copyright 2018-21 Aaron Sherber
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,19 +25,20 @@ using SqlKata.Compilers;
 
 namespace MDRCloudServices.DataLayer.SqlKata;
 
-public enum CompilerType { SqlServer, MySql, Postgres, Firebird, SQLite, Oracle, Custom };
+public enum CompilerType
+{ SqlServer, MySql, Postgres, Firebird, SQLite, Oracle, Custom };
 
 /// <summary>
-/// Ported to NPoco from PetaPoco by David Lees 
-/// 
+/// Ported to NPoco from PetaPoco by David Lees
+///
 /// Copyright 2018-21 Aaron Sherber
-/// 
+///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
 /// You may obtain a copy of the License at
-/// 
+///
 /// http://www.apache.org/licenses/LICENSE-2.0
-/// 
+///
 /// Unless required by applicable law or agreed to in writing, software
 /// distributed under the License is distributed on an "AS IS" BASIS,
 /// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -71,9 +72,6 @@ public static class SqlKataExtensions
         }
     }
 
-    [Obsolete("Use DefaultCompilerType instead.")]
-    public static CompilerType DefaultCompiler { get => DefaultCompilerType; set => DefaultCompilerType = value; }
-
     /// <summary>
     /// A custom <seealso cref="Compiler"/> instance to use when one is not specified.
     /// </summary>
@@ -94,11 +92,11 @@ public static class SqlKataExtensions
         }
     }
 
-    /// <summary>The NPoco data factory used to map table and column names.</summary>    
+    /// <summary>The NPoco data factory used to map table and column names.</summary>
     public static IPocoDataFactory DataFactory { get; set; } = new Database(new SqlConnection()).PocoDataFactory;
 
     /// <summary>
-    /// Convert a <seealso cref="Query"/> object to a <seealso cref="Sql" /> object, 
+    /// Convert a <seealso cref="Query"/> object to a <seealso cref="Sql" /> object,
     /// using a <seealso cref="SqlServerCompiler"/>.
     /// </summary>
     /// <param name="query"></param>
@@ -153,7 +151,7 @@ public static class SqlKataExtensions
         var compiled = compiler.Compile(query);
         var ppSql = Helper.ReplaceAll(compiled.RawSql, "?", x => "@" + x);
 
-        return new Sql(";" + ppSql, compiled.Bindings.ToArray());
+        return new Sql(";" + ppSql, [.. compiled.Bindings]);
     }
 
     /// <summary>
@@ -192,7 +190,7 @@ public static class SqlKataExtensions
     {
         query = query ?? throw new ArgumentNullException(nameof(query));
         factory ??= DataFactory ?? throw new ArgumentNullException(nameof(factory));
-               
+
         var tableInfo = factory.ForType(type).TableInfo;
         return query.FromRaw(tableInfo.TableName);
     }
@@ -214,9 +212,8 @@ public static class SqlKataExtensions
     /// <returns></returns>
     public static Query ForObject(this Query query, object poco, IPocoDataFactory factory) => query.ForType(poco.GetType(), factory);
 
-
     /// <summary>
-    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given type, using a default mapper. 
+    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given type, using a default mapper.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="query"></param>
@@ -233,7 +230,7 @@ public static class SqlKataExtensions
     public static Query GenerateSelect<T>(this Query query, IPocoDataFactory factory) => query.GenerateSelect(typeof(T), factory);
 
     /// <summary>
-    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given object, using a default mapper. 
+    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given object, using a default mapper.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="poco"></param>
@@ -251,7 +248,7 @@ public static class SqlKataExtensions
         => query.GenerateSelect(poco.GetType(), factory);
 
     /// <summary>
-    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given type, using a default mapper. 
+    /// Generates a SELECT query based on the <seealso cref="PocoData"/> for the given type, using a default mapper.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="type"></param>
@@ -272,16 +269,16 @@ public static class SqlKataExtensions
         if (!query.HasComponent("select"))
         {
             factory ??= DataFactory ?? throw new ArgumentNullException(nameof(factory));
-            var pd =  factory.ForType(type);
+            var pd = factory.ForType(type);
 
             if (!query.HasComponent("from"))
             {
                 query.FromRaw($"{pd.TableInfo.TableName} as \"a\"");
-                query = pd.Columns.Any() ? query.Select(pd.QueryColumns.Select(x => $"a.{x.Value.ColumnName}").ToArray()) : query.SelectRaw("NULL");
+                query = pd.Columns.Count != 0 ? query.Select(pd.QueryColumns.Select(x => $"a.{x.Value.ColumnName}").ToArray()) : query.SelectRaw("NULL");
             }
             else
             {
-                query = pd.Columns.Any() ? query.Select(pd.QueryColumns.Select(x => x.Value.ColumnName).ToArray()) : query.SelectRaw("NULL");
+                query = pd.Columns.Count != 0 ? query.Select(pd.QueryColumns.Select(x => x.Value.ColumnName).ToArray()) : query.SelectRaw("NULL");
             }
         }
 

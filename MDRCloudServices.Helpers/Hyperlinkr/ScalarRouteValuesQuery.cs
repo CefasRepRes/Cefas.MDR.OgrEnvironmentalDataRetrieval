@@ -51,21 +51,17 @@ public class ScalarRouteValuesQuery : IRouteValuesQuery
     /// </para>
     /// </remarks>
     /// <seealso cref="GetParameterValues" />
-    public IDictionary<string, object> GetRouteValues(
-        MethodCallExpression methodCallExpression)
+    public IDictionary<string, object> GetRouteValues(MethodCallExpression methodCallExpression)
     {
-        if (methodCallExpression == null)
-            throw new ArgumentNullException(nameof(methodCallExpression));
+        ArgumentNullException.ThrowIfNull(methodCallExpression);
 
-        var parameters = methodCallExpression.Method.GetParameters()            
+        var parameters = methodCallExpression.Method.GetParameters()
             .Select(p => GetParameterValues(methodCallExpression, p))
             .SelectMany(d => d)
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-        if (parameters == null) return new Dictionary<string, object>();
-
         var result = new Dictionary<string, object>();
-       
+
         foreach (var parameter in parameters.Where(x => x.Value != null))
         {
             var type = parameter.Value!.GetType();
@@ -75,7 +71,7 @@ public class ScalarRouteValuesQuery : IRouteValuesQuery
             }
             else
             {
-                foreach(var info in type.GetProperties())
+                foreach (var info in type.GetProperties())
                 {
                     var value = info.GetValue(parameter.Value);
                     if (value != null) result.Add(info.Name, value);
@@ -120,10 +116,8 @@ public class ScalarRouteValuesQuery : IRouteValuesQuery
         MethodCallExpression methodCallExpression,
         ParameterInfo parameterInfo)
     {
-        if (methodCallExpression == null)
-            throw new ArgumentNullException(nameof(methodCallExpression));
-        if (parameterInfo == null)
-            throw new ArgumentNullException(nameof(parameterInfo));
+        ArgumentNullException.ThrowIfNull(methodCallExpression);
+        ArgumentNullException.ThrowIfNull(parameterInfo);
 
         var arg = methodCallExpression.Arguments[parameterInfo.Position];
         var lambda = Expression.Lambda(arg);

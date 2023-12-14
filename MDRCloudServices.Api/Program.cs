@@ -1,35 +1,34 @@
-﻿using Serilog.Events;
-using Serilog;
-using Serilog.Core;
-using MDRCloudServices.Services.Models;
-using Microsoft.ApplicationInsights.Extensibility;
-using Ganss.XSS;
-using MDRCloudServices.Interfaces;
-using MDRDB.Recordsets;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using NetTopologySuite.IO.Converters;
-using Newtonsoft.Json;
+﻿using MDRCloudServices.Api.Filters;
 using MDRCloudServices.Api.Models;
 using MDRCloudServices.DataLayer.Models;
-using Microsoft.OpenApi.Models;
-using MDRCloudServices.Api.Filters;
-using Microsoft.AspNetCore.Http.Features;
+using MDRCloudServices.Exceptions;
+using MDRCloudServices.Helpers;
+using MDRCloudServices.Interfaces;
 using MDRCloudServices.OgrEnvironmentalDataRetrieval;
 using MDRCloudServices.Services;
-using MediatR;
 using MDRCloudServices.Services.Interfaces;
+using MDRCloudServices.Services.Models;
 using MDRCloudServices.Services.Services;
+using MDRDB.Recordsets;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.OpenApi.Models;
+using NetTopologySuite.IO.Converters;
+using Newtonsoft.Json;
 using NPoco;
-using MDRCloudServices.Helpers;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 static Database GetDatabase(IConfiguration configuration)
 {
-    if (configuration.GetSection(nameof(AppOptions)).Get<AppOptions>().Database == "postgres")
+    if (configuration.GetSection(nameof(AppOptions)).Get<AppOptions>()?.Database == "postgres")
     {
-        return new PgDatabseWithLogging(configuration.GetConnectionString(SecretKeys.Database), SqlHelper.GetNPocoPollyPolicy());
+        return new PgDatabseWithLogging(configuration.GetConnectionString(SecretKeys.Database) ?? string.Empty, SqlHelper.GetNPocoPollyPolicy());
     }
-    return new SqlServerDatabaseWithLogging(configuration.GetConnectionString(SecretKeys.Database), SqlHelper.GetNPocoPollyPolicy());
+    return new SqlServerDatabaseWithLogging(configuration.GetConnectionString(SecretKeys.Database) ?? string.Empty, SqlHelper.GetNPocoPollyPolicy());
 }
 
 Log.Logger = new LoggerConfiguration()
@@ -153,13 +152,13 @@ try
     });
 
     builder.Services.AddHealthChecks()
-        .AddSqlServer(builder.Configuration.GetConnectionString(SecretKeys.Database))
-        .AddAzureBlobStorage(builder.Configuration.GetConnectionString(SecretKeys.BlobStorage))
+        .AddSqlServer(builder.Configuration.GetConnectionString(SecretKeys.Database) ?? throw new NotFoundException("Database connection string not set"))
+        .AddAzureBlobStorage(builder.Configuration.GetConnectionString(SecretKeys.BlobStorage) ?? throw new NotFoundException("Blob storage connection string not set"))
         .AddApplicationInsightsPublisher()
         .AddSeqPublisher(x =>
         {
-            x.Endpoint = builder.Configuration["Seq:ServerUrl"];
-            x.ApiKey = builder.Configuration["Seq:ApiKey"];
+            x.Endpoint = builder.Configuration["Seq:ServerUrl"] ?? throw new NotFoundException("SEQ Server URL not set");
+            x.ApiKey = builder.Configuration["Seq:ApiKey"] ?? throw new NotFoundException("SEQ API key not set");
         });
 
     builder.Services.AddHttpContextAccessor();
@@ -168,9 +167,10 @@ try
     builder.Services.AddTransient<IRecordsetTableService, RecordsetTableService>();
     builder.Services.AddTransient<IStorageDatabaseService, StorageDatabaseService>();
     builder.Services.AddTransient<IVocabularyService, VocabularyService>();
-    builder.Services.AddMediatR(
-        typeof(OgrEnvironmentalDataRetrievalAssembly).Assembly,
-        typeof(ServicesAssembly).Assembly);
+    builder.Services.AddMediatR(x =>
+    {
+        x.RegisterServicesFromAssemblies(typeof(OgrEnvironmentalDataRetrievalAssembly).Assembly, typeof(ServicesAssembly).Assembly);
+    });
 
     var app = builder.Build();
 

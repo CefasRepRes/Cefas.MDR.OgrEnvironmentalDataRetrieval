@@ -1,10 +1,7 @@
 ﻿using MDRCloudServices.Interfaces;
-using System;
-using System.Runtime.Serialization;
 
 namespace MDRCloudServices.DataLayer.Models;
 
-[Serializable]
 public class ValidationException : ApplicationException
 {
     public IErrorResponse Result { get; set; } = new ErrorResponse();
@@ -19,11 +16,14 @@ public class ValidationException : ApplicationException
         Result = result;
     }
 
-    public ValidationException(string Message, Exception innerException) : base(Message, innerException) { }
+    public ValidationException(string Message, Exception innerException) : base(Message, innerException)
+    {
+    }
 
-    public ValidationException(string Message) : base(Message) { }
+    public ValidationException(string Message) : base(Message)
+    {
+    }
 
-    public ValidationException() { }
-
-    protected ValidationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public ValidationException()
+    { }
 }

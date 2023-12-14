@@ -13,7 +13,7 @@ public class ErrorResponse : IErrorResponse
     [DataMember]
     public bool HasErrors
     {
-        get { return Errors.Any(); }
+        get { return Errors.Count != 0; }
         set { throw new NotImplementedException(); }
     }
 

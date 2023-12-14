@@ -159,13 +159,13 @@ public class LogRequestFilterAttribute : ActionFilterAttribute
             var routes = context.RouteData.Values.ToDictionary(x => x.Key.ToLowerInvariant(), x => x.Value);
             var parameters = context.HttpContext.Items.ToDictionary(x => (x.Key.ToString() ?? string.Empty).ToLowerInvariant(), x => x.Value);
 
-            if (routes.ContainsKey("id"))
+            if (routes.TryGetValue("id", out var value))
             {
-                if (routes["id"].CanBeCastTo(out int num))
+                if (value.CanBeCastTo(out int num))
                 {
                     actionLog.ObjectId = num;
                 }
-                else if (routes["id"].CanBeCastTo(out string str) && int.TryParse(str, out var i))
+                else if (value.CanBeCastTo(out string str) && int.TryParse(str, out var i))
                 {
                     actionLog.ObjectId = i;
                 }
@@ -174,13 +174,13 @@ public class LogRequestFilterAttribute : ActionFilterAttribute
                     actionLog.ObjectId = null;
                 }
             }
-            else if (parameters.ContainsKey("id"))
+            else if (parameters.TryGetValue("id", out var value2))
             {
-                if (parameters["id"].CanBeCastTo(out int num2))
+                if (value2.CanBeCastTo(out int num2))
                 {
                     actionLog.ObjectId = num2;
                 }
-                else if (parameters["id"].CanBeCastTo(out string str) && int.TryParse(str, out var i))
+                else if (value2.CanBeCastTo(out string str) && int.TryParse(str, out var i))
                 {
                     actionLog.ObjectId = i;
                 }
@@ -202,9 +202,9 @@ public class LogRequestFilterAttribute : ActionFilterAttribute
         string? headerValue = null;
         try
         {
-            if (headers.ContainsKey(headerKey))
+            if (headers.TryGetValue(headerKey, out var value))
             {
-                var userAgentValues = headers[headerKey];
+                var userAgentValues = value;
                 headerValue = userAgentValues.Equals(StringValues.Empty) ? "UNKNOWN" : userAgentValues.ToString();
             }
         }

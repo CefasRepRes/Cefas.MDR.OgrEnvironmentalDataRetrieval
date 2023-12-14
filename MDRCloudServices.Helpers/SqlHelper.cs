@@ -16,7 +16,7 @@ public static class SqlHelper
 
     public static string GenerateColumnName(string name)
     {
-        if (name == null) name = string.Empty;
+        name ??= string.Empty;
 
         /* we will only allow alphanumeric, underscore, and space characters in field names, that way we can't get SQL injection
             we deliberately *don't* use char.iswhitespace because weird space characters would cause us to need to escape the column names */
@@ -36,7 +36,6 @@ public static class SqlHelper
         }
         return colname;
     }
-
 
     public static IPollyPolicy GetNPocoPollyPolicy()
     {

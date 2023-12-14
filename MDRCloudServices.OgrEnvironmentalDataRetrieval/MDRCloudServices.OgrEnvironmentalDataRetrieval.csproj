@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -40,11 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="2.1.1" />
-    <PackageReference Include="NPoco" Version="5.3.2" />
-    <PackageReference Include="SqlKata" Version="2.3.7" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="4.0.0" />
+    <PackageReference Include="NPoco" Version="5.7.1" />
+    <PackageReference Include="SqlKata" Version="2.4.0" />
     <PackageReference Include="YamlDotNet.NetCore" Version="1.0.0" />
   </ItemGroup>
 

@@ -13,7 +13,7 @@ public record FormatAsGeoJsonQuery(int id, IAsyncEnumerable<Dictionary<string, o
 /// <summary>Format as GeoJson Handler</summary>
 public class FormatAsGeoJsonHandler : IRequestHandler<FormatAsGeoJsonQuery, Stream>
 {
-    readonly string[] ExcludeFields = new string[] { "__Id", "MDR_Geometry", "CreatedVersion", "DeletedVersion" };
+    private readonly string[] ExcludeFields = new string[] { "__Id", "MDR_Geometry", "CreatedVersion", "DeletedVersion" };
 
     /// <summary>Handle Formnat as GeoJson query</summary>
     /// <param name="request"></param>
@@ -44,16 +44,16 @@ public class FormatAsGeoJsonHandler : IRequestHandler<FormatAsGeoJsonQuery, Stre
             };
             foreach (var key in item.Keys.Where(x => !ExcludeFields.Contains(x)))
             {
-                if (item.ContainsKey(key) && item[key] != null)
-                   feature.Attributes.Add(key, item[key]);                
+                if (item.TryGetValue(key, out var value) && value != null)
+                    feature.Attributes.Add(key, value);
             }
 
-            foreach(var attr in feature.Attributes.GetNames())
+            foreach (var attr in feature.Attributes.GetNames())
             {
                 if (feature.Attributes[attr] is double d && double.IsInfinity(d))
                     feature.Attributes.DeleteAttribute(attr);
             }
-            
+
             var serialiser = GeoJsonSerializer.Create();
             var textWriter = new StringWriter();
             serialiser.Serialize(textWriter, feature);
