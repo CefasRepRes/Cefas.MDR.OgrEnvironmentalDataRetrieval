@@ -5,29 +5,30 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>c7b0ae3b-ec96-4cc6-aa12-52cef206f7b3</UserSecretsId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.AzureStorage" Version="7.0.0" />
-      <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="7.0.0" />
-      <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" Version="7.0.0" />
-      <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
-      <PackageReference Include="Azure.Core" Version="1.36.0" />
+      <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="8.0.0" />
+      <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" Version="8.0.0" />
+      <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.0" />
+      <PackageReference Include="Azure.Core" Version="1.37.0" />
       <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.0" />
       <PackageReference Include="Azure.Identity" Version="1.10.4" />
       <PackageReference Include="Azure.Storage.Common" Version="12.18.1" />
       <PackageReference Include="Azure.Storage.Queues" Version="12.17.1" />
-      <PackageReference Include="HtmlSanitizer" Version="8.0.795" />
+      <PackageReference Include="HtmlSanitizer" Version="8.0.811" />
       <PackageReference Include="MailKit" Version="4.3.0" />
       <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="6.0.25" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
-      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
-      <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="8.0.0" />
-      <PackageReference Include="Microsoft.Identity.Client" Version="4.58.1" />
-      <PackageReference Include="Microsoft.Identity.Web" Version="2.16.0" />
-      <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="2.16.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="6.0.26" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+      <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Identity.Client" Version="4.59.0" />
+      <PackageReference Include="Microsoft.Identity.Web" Version="2.16.1" />
+      <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="2.16.1" />
       <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.8.14" />
       <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
       <PackageReference Include="NetTopologySuite" Version="2.5.0" />
@@ -35,8 +36,8 @@
       <PackageReference Include="NPoco.SqlServer" Version="5.7.1" />
       <PackageReference Include="RestSharp" Version="110.2.0" />
       <PackageReference Include="Npgsql.NetTopologySuite" Version="8.0.1" />
-      <PackageReference Include="Seq.Extensions.Logging" Version="6.1.0" />
-      <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+      <PackageReference Include="Seq.Extensions.Logging" Version="8.0.0" />
+      <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
       <PackageReference Include="Serilog.Enrichers.Environment" Version="2.3.0" />
       <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
       <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
@@ -67,6 +68,13 @@
 
     <ItemGroup>
         <AdditionalFiles Include="..\.sonarlint\mdrservicesinternal\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
