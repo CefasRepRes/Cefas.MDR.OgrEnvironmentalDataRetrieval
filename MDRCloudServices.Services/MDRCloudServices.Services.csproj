@@ -22,6 +22,7 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
         <PackageReference Include="Microsoft.Graph" Version="5.40.0" />
+        <PackageReference Include="Microsoft.Identity.Client" Version="4.60.4" />
         <PackageReference Include="MimeKit" Version="4.15.1" />
         <PackageReference Include="MimeTypeMapOfficial" Version="1.0.17" />
         <PackageReference Include="NetTopologySuite" Version="2.5.0" />
