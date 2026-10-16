@@ -7,9 +7,10 @@
   </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Identity" Version="1.11.4" />
         <PackageReference Include="GeoAPI.Core" Version="1.7.5" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-        <PackageReference Include="Microsoft.Identity.Client" Version="4.60.4" />
+        <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
         <PackageReference Include="NetTopologySuite" Version="2.5.0" />
         <PackageReference Include="NetTopologySuite.IO.SqlServerBytes" Version="2.1.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
